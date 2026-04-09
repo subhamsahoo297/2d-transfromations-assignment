@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +12,24 @@
     <style>
         /* Custom range slider styling for a cleaner look */
         input[type=range] {
-            accent-color: #4f46e5; /* Indigo 600 */
+            accent-color: #4f46e5;
+            /* Indigo 600 */
         }
+
         canvas {
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
     </style>
 </head>
+
 <body class="bg-gray-50 min-h-screen p-4 md:p-8 font-sans text-gray-800">
 
     <div class="max-w-6xl mx-auto">
         <header class="mb-8 text-center">
             <h1 class="text-3xl font-bold text-gray-900 mb-2">2D Geometric Transformations</h1>
-            <p class="text-gray-600">Drag the red points on the Identity shape (top-left) to see how transformations affect the geometry in real-time.</p>
+            <p class="text-gray-600">Drag the red points on the Identity shape (top-left) to see how transformations
+                affect the geometry in real-time.</p>
         </header>
 
         <!-- Main Grid Container -->
@@ -47,11 +52,13 @@
                 <div id="canvas-translation" class="mb-4"></div>
                 <div class="w-full flex flex-col gap-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-16">Tx: <span id="tx-val" class="font-normal">50</span></label>
+                        <label class="text-sm font-semibold w-16">Tx: <span id="tx-val"
+                                class="font-normal">50</span></label>
                         <input type="range" id="tx-slider" min="-150" max="150" value="50" step="1" class="flex-1">
                     </div>
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-16">Ty: <span id="ty-val" class="font-normal">30</span></label>
+                        <label class="text-sm font-semibold w-16">Ty: <span id="ty-val"
+                                class="font-normal">30</span></label>
                         <input type="range" id="ty-slider" min="-150" max="150" value="30" step="1" class="flex-1">
                     </div>
                 </div>
@@ -64,7 +71,8 @@
                 <div id="canvas-rotation" class="mb-4"></div>
                 <div class="w-full flex flex-col gap-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-24">&theta; (deg): <span id="th-val" class="font-normal">45</span></label>
+                        <label class="text-sm font-semibold w-24">&theta; (deg): <span id="th-val"
+                                class="font-normal">45</span></label>
                         <input type="range" id="th-slider" min="-180" max="180" value="45" step="1" class="flex-1">
                     </div>
                 </div>
@@ -77,11 +85,13 @@
                 <div id="canvas-scale" class="mb-4"></div>
                 <div class="w-full flex flex-col gap-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-16">Sx: <span id="sx-val" class="font-normal">1.5</span></label>
+                        <label class="text-sm font-semibold w-16">Sx: <span id="sx-val"
+                                class="font-normal">1.5</span></label>
                         <input type="range" id="sx-slider" min="-3" max="3" value="1.5" step="0.1" class="flex-1">
                     </div>
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-16">Sy: <span id="sy-val" class="font-normal">1.5</span></label>
+                        <label class="text-sm font-semibold w-16">Sy: <span id="sy-val"
+                                class="font-normal">1.5</span></label>
                         <input type="range" id="sy-slider" min="-3" max="3" value="1.5" step="0.1" class="flex-1">
                     </div>
                 </div>
@@ -94,11 +104,13 @@
                 <div id="canvas-shear" class="mb-4"></div>
                 <div class="w-full flex flex-col gap-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-20">Skew X: <span id="shx-val" class="font-normal">0.5</span></label>
+                        <label class="text-sm font-semibold w-20">Skew X: <span id="shx-val"
+                                class="font-normal">0.5</span></label>
                         <input type="range" id="shx-slider" min="-2" max="2" value="0.5" step="0.1" class="flex-1">
                     </div>
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-semibold w-20">Skew Y: <span id="shy-val" class="font-normal">0</span></label>
+                        <label class="text-sm font-semibold w-20">Skew Y: <span id="shy-val"
+                                class="font-normal">0</span></label>
                         <input type="range" id="shy-slider" min="-2" max="2" value="0" step="0.1" class="flex-1">
                     </div>
                 </div>
@@ -115,7 +127,8 @@
                         <span class="text-sm font-semibold">Reflect X-Axis</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" id="refy-check" checked class="w-4 h-4 text-indigo-600 rounded border-gray-300">
+                        <input type="checkbox" id="refy-check" checked
+                            class="w-4 h-4 text-indigo-600 rounded border-gray-300">
                         <span class="text-sm font-semibold">Reflect Y-Axis</span>
                     </label>
                 </div>
@@ -128,16 +141,16 @@
         // Global state: The base geometric points for an 'F' shape
         // Shared across all sketch instances
         const baseShape = [
-            {x: -20, y: -40}, // Bottom left of stem
-            {x: -20, y: 40},  // Top left of stem
-            {x: 30, y: 40},   // Top right of top bar
-            {x: 30, y: 20},   // Bottom right of top bar
-            {x: 0, y: 20},    // Inner corner top
-            {x: 0, y: 0},     // Inner corner middle-top
-            {x: 20, y: 0},    // Right of middle bar
-            {x: 20, y: -20},  // Bottom of middle bar
-            {x: 0, y: -20},   // Inner corner middle-bottom
-            {x: 0, y: -40}    // Bottom right of stem
+            { x: -20, y: -40 }, // Bottom left of stem
+            { x: -20, y: 40 },  // Top left of stem
+            { x: 30, y: 40 },   // Top right of top bar
+            { x: 30, y: 20 },   // Bottom right of top bar
+            { x: 0, y: 20 },    // Inner corner top
+            { x: 0, y: 0 },     // Inner corner middle-top
+            { x: 20, y: 0 },    // Right of middle bar
+            { x: 20, y: -20 },  // Bottom of middle bar
+            { x: 0, y: -20 },   // Inner corner middle-bottom
+            { x: 0, y: -40 }    // Bottom right of stem
         ];
 
         const CANVAS_SIZE = 280;
@@ -183,10 +196,10 @@
 
             p.draw = () => {
                 p.background(255);
-                
+
                 // Set origin to center, and Y-axis pointing UP (standard Cartesian)
                 p.translate(p.width / 2, p.height / 2);
-                p.scale(1, -1); 
+                p.scale(1, -1);
 
                 drawGridAndAxes(p);
 
@@ -267,7 +280,9 @@
                 p.strokeWeight(2);
                 p.beginShape();
                 baseShape.forEach(pt => {
-                    p.vertex(pt.x, pt.y);
+                    let x = pt.x + tx;
+                    let y = pt.y + ty;
+                    p.vertex(x, y);
                 });
                 p.endShape(p.CLOSE);
             };
@@ -303,7 +318,9 @@
                 p.strokeWeight(2);
                 p.beginShape();
                 baseShape.forEach(pt => {
-                    p.vertex(pt.x, pt.y);
+                    let x = pt.x * cosT - pt.y * sinT;
+                    let y = pt.x * sinT + pt.y * cosT;
+                    p.vertex(x, y);
                 });
                 p.endShape(p.CLOSE);
             };
@@ -340,7 +357,9 @@
                 p.strokeWeight(2);
                 p.beginShape();
                 baseShape.forEach(pt => {
-                    p.vertex(pt.x, pt.y);
+                    let x = pt.x * sx;
+                    let y = pt.y * sy;
+                    p.vertex(x, y);
                 });
                 p.endShape(p.CLOSE);
             };
@@ -377,8 +396,9 @@
                 p.strokeWeight(2);
                 p.beginShape();
                 baseShape.forEach(pt => {
-                    // Math: x' = x + y*shx, y' = y + x*shy
-                    p.vertex(pt.x, pt.y);
+                    let x = pt.x + pt.y * shx;
+                    let y = pt.y + pt.x * shy;
+                    p.vertex(x, y);
                 });
                 p.endShape(p.CLOSE);
             };
@@ -411,11 +431,18 @@
                 p.strokeWeight(2);
                 p.beginShape();
                 baseShape.forEach(pt => {
-                    p.vertex(pt.x, pt.y);
+                    let x = pt.x;
+                    let y = pt.y;
+
+                    if (refX) y = -y;
+                    if (refY) x = -x;
+
+                    p.vertex(x, y);
                 });
                 p.endShape(p.CLOSE);
             };
         });
     </script>
 </body>
+
 </html>
